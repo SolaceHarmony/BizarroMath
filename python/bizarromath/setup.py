@@ -9,5 +9,5 @@ setup(
     install_requires=[
         # or whichever versions
     ],
-    python_requires=">=3.7",
+    python_requires=">=3.12", # May work with 3.10 or earlier, but 3.12 is the target
 )

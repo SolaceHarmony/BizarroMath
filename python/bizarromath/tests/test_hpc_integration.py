@@ -1,7 +1,6 @@
 # bizarromath/tests/test_hpc_integration.py
 import pytest
 import random
-import time
 from array import array
 from bizarromath.meganumber.memory_pool import CPUMemoryPool
 from bizarromath.meganumber.optimized_toom3 import OptimizedToom3

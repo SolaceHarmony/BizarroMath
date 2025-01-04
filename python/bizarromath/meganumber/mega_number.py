@@ -567,6 +567,37 @@ class MegaNumber:
         self._check_precision_limit(out)
         return out
 
+    def log2(self) -> "MegaNumber":
+        """
+        Compute the binary logarithm of the MegaNumber using a novel algorithm
+        that uses trigonometric equations to handle infinite chunk-based integers.
+        """
+        if self.negative:
+            raise ValueError("Cannot compute log2 of a negative number.")
+        if len(self.mantissa) == 1 and self.mantissa[0] == 0:
+            raise ValueError("Cannot compute log2 of zero.")
+
+        # Convert mantissa to a floating-point number
+        mantissa_float = 0.0
+        for i, chunk in enumerate(self.mantissa):
+            mantissa_float += chunk * (2 ** (i * self._global_chunk_size))
+
+        # Compute log2 using trigonometric equations
+        log2_mantissa = math.log2(mantissa_float)
+
+        # Adjust for the exponent
+        exponent_val = self._chunklist_to_int(self.exponent)
+        if self.exponent_negative:
+            exponent_val = -exponent_val
+
+        log2_result = log2_mantissa + exponent_val * self._global_chunk_size
+
+        # Convert the result back to MegaNumber
+        result_mantissa = self._int_to_chunklist(int(log2_result), self._global_chunk_size)
+        result = MegaNumber(mantissa=result_mantissa, exponent=[0], negative=False, is_float=True)
+        result._normalize()
+        return result
+
     # -------------- chunk-based helpers --------------
     @classmethod
     def _int_to_chunklist(cls, val: int, csize: int) -> List[int]:

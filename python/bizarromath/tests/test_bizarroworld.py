@@ -1,32 +1,33 @@
 import pytest
-from bizarromath.bizzaroworld.bizarroworld_core import DutyCycleWave, BizarroWorld
+from bizarromath.bizzaroworld.bizarroworld_core import DutyCycleWave, BizarroWorld, FrequencyBandAnalyzer
 from bizarromath.meganumber.mega_number import MegaNumber
 
-def test_duty_cycle_wave_generate():
-    wave_gen = DutyCycleWave(sample_rate=44100, duty_cycle=0.5, period=8)
-    wave = wave_gen.generate(16)
-    assert wave.to_decimal_string() == "32768"  # 16 bits with 8 high and 8 low
+def test_duty_cycle_wave():
+    sample_rate = MegaNumber.from_int(44100)
+    duty_cycle = MegaNumber.from_int(50).div(MegaNumber.from_int(100))
+    period = MegaNumber.from_int(8)
+    wave_gen = DutyCycleWave(sample_rate, duty_cycle, period)
+    wave = wave_gen.generate(MegaNumber.from_int(16))
+    assert wave == [1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0]
 
-def test_duty_cycle_wave_to_decimal():
-    wave_gen = DutyCycleWave(sample_rate=44100, duty_cycle=0.5, period=8)
-    wave = wave_gen.generate(16)
-    decimal_str = wave_gen.to_decimal(wave)
-    assert decimal_str == "32768"
+def test_bizarro_world_from_duty_cycle():
+    period = BizarroWorld(mantissa=[8])
+    duty = BizarroWorld(mantissa=[4])
+    result = BizarroWorld.from_duty_cycle(period, duty)
+    assert result.mantissa == [1, 1, 1, 1, 0, 0, 0, 0]
 
-def test_duty_cycle_wave_to_int_array():
-    wave_gen = DutyCycleWave(sample_rate=44100, duty_cycle=0.5, period=8)
-    wave = wave_gen.generate(16)
-    int_array = wave_gen.to_int_array(wave)
-    assert int_array == [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 0]
+def test_bizarro_world_xor_wave():
+    wave1 = BizarroWorld(mantissa=[1, 0, 1, 0])
+    wave2 = BizarroWorld(mantissa=[0, 1, 0, 1])
+    result = wave1.xor_wave(wave2)
+    assert result.mantissa == [1, 1, 1, 1]
 
-def test_duty_cycle_wave_to_bytearray():
-    wave_gen = DutyCycleWave(sample_rate=44100, duty_cycle=0.5, period=8)
-    wave = wave_gen.generate(16)
-    byte_array = wave_gen.to_bytearray(wave)
-    assert byte_array == bytearray([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 0])
-
-def test_bizarroworld_from_duty_cycle():
-    period = BizarroWorld.from_decimal_string("8")
-    duty = BizarroWorld.from_decimal_string("0.5")
-    wave = BizarroWorld.from_duty_cycle(period, duty)
-    assert wave.to_decimal_string() == "32768"
+def test_frequency_band_analyzer():
+    bit_depth = MegaNumber.from_int(16)
+    sample_rate = MegaNumber.from_int(44100)
+    num_bands = MegaNumber.from_int(8)
+    analyzer = FrequencyBandAnalyzer(bit_depth, sample_rate, num_bands)
+    bits = [1, 0, 1, 1, 0, 1, 0, 1]
+    band_waves = analyzer.analyze_pattern(bits)
+    assert len(band_waves) == 8
+    assert all(isinstance(band, list) for band in band_waves)

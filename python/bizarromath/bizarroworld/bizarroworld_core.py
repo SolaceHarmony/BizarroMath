@@ -1,5 +1,5 @@
 from typing import List
-from ..meganumber.mega_number import MegaNumber
+from bizarromath.meganumber.mega_number import MegaNumber
 
 class DutyCycleWave:
     """Binary duty-cycle wave generator for high-frequency carrier signals"""

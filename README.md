@@ -1,4 +1,3 @@
-
 # BizarroMath
 
 BizarroMath is a **high-performance**, chunk-based big-integer library (and fraction system) built for **insane precision** and **flexibility**. Whether you’re doing monstrous integer exponentiations or exact decimal arithmetic without compromise, BizarroMath’s unique HPC approach keeps you in control.
@@ -15,6 +14,8 @@ BizarroMath is a **high-performance**, chunk-based big-integer library (and frac
   - [MegaNumber (Chunk-Based Big-Int)](#meganumber-chunk-based-big-int)
   - [MegaFraction (Exact Rational Arithmetic)](#megafraction-exact-rational-arithmetic)
   - [Memory Pool and Optimized Multiplication](#memory-pool-and-optimized-multiplication)
+  - [DutyCycleWave (Binary Wave Generator)](#dutycyclewave-binary-wave-generator)
+  - [FrequencyBandAnalyzer (Frequency Analysis)](#frequencybandanalyzer-frequency-analysis)
 - [Contributing](#contributing)
 - [License](#license)
 - [References & Credits](#references--credits)
@@ -41,6 +42,12 @@ BizarroMath is a **high-performance**, chunk-based big-integer library (and frac
 5. **High Precision, Infinitely**
    - No rounding or truncation mid-calculation.
    - Perfect for cryptography, advanced numeric analysis, or any scenario where Python’s default `int` or `decimal` might not suffice.
+
+6. **Binary Wave Generation**
+   - `DutyCycleWave` class to generate binary waves using `MegaNumber` for handling large bit waveforms.
+
+7. **Frequency Analysis**
+   - `FrequencyBandAnalyzer` class to analyze bit patterns across frequency bands using `MegaNumber`.
 
 ---
 
@@ -93,16 +100,21 @@ bizarromath/
 │   ├── __init__.py
 │   ├── fraction_core.py  # MegaFraction class + HPC fraction ops
 │   └── fraction_wrappers.py # HPC wrappers (hpc_add, hpc_sub, etc.)
+└── bizzaroworld/         # Binary wave generation and frequency analysis
+    ├── __init__.py
+    ├── bizarroworld_core.py # DutyCycleWave and FrequencyBandAnalyzer classes
 └── tests/
     ├── __init__.py
     ├── test_meganumber.py      # Tests for MegaNumber
     ├── test_megafraction.py    # Tests for MegaFraction
     └── test_hpc_integration.py # HPC memory pool & advanced multiply tests
+    └── test_bizarroworld.py    # Tests for DutyCycleWave and FrequencyBandAnalyzer
 ```
 
 **Key Modules**  
 - **`meganumber`**: core HPC big-int (`MegaNumber`), plus memory pool & advanced multipliers.  
-- **`megafraction`**: fraction logic (`MegaFraction`) + HPC wrappers.
+- **`megafraction`**: fraction logic (`MegaFraction`) + HPC wrappers.  
+- **`bizzaroworld`**: binary wave generation (`DutyCycleWave`) and frequency analysis (`FrequencyBandAnalyzer`).
 
 ---
 
@@ -185,6 +197,35 @@ def limbs_to_int(limbs: array.array) -> int:
     return val
 
 print("123456 * 999999 =>", limbs_to_int(prod_arr))
+```
+
+### DutyCycleWave (Binary Wave Generator)
+
+```python
+from bizarromath.bizzaroworld.bizarroworld_core import DutyCycleWave
+from bizarromath.meganumber.mega_number import MegaNumber
+
+sample_rate = MegaNumber.from_int(44100)
+duty_cycle = MegaNumber.from_int(50).div(MegaNumber.from_int(100))
+period = MegaNumber.from_int(8)
+wave_gen = DutyCycleWave(sample_rate, duty_cycle, period)
+wave = wave_gen.generate(MegaNumber.from_int(16))
+print("Generated wave:", wave)
+```
+
+### FrequencyBandAnalyzer (Frequency Analysis)
+
+```python
+from bizarromath.bizzaroworld.bizarroworld_core import FrequencyBandAnalyzer
+from bizarromath.meganumber.mega_number import MegaNumber
+
+bit_depth = MegaNumber.from_int(16)
+sample_rate = MegaNumber.from_int(44100)
+num_bands = MegaNumber.from_int(8)
+analyzer = FrequencyBandAnalyzer(bit_depth, sample_rate, num_bands)
+bits = [1, 0, 1, 1, 0, 1, 0, 1]
+band_waves = analyzer.analyze_pattern(bits)
+print("Band waves:", band_waves)
 ```
 
 ---

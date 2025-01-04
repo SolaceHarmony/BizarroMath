@@ -8,6 +8,8 @@ To run:
 """
 
 from .fraction_core import MegaFraction
+from ..bizzaroworld.bizarroworld_core import DutyCycleWave, FrequencyBandAnalyzer
+from ..meganumber.mega_number import MegaNumber
 
 def fraction_stress_test():
     """
@@ -66,6 +68,31 @@ def fraction_stress_test():
 
     print("\n=== End of fraction_stress_test ===")
 
+def duty_cycle_wave_demo():
+    """
+    Demonstrate DutyCycleWave class usage.
+    """
+    sample_rate = MegaNumber.from_int(44100)
+    duty_cycle = MegaNumber.from_int(50).div(MegaNumber.from_int(100))
+    period = MegaNumber.from_int(8)
+    wave_gen = DutyCycleWave(sample_rate, duty_cycle, period)
+    wave = wave_gen.generate(MegaNumber.from_int(16))
+    print("Generated wave:", wave)
+
+def frequency_band_analyzer_demo():
+    """
+    Demonstrate FrequencyBandAnalyzer class usage.
+    """
+    bit_depth = MegaNumber.from_int(16)
+    sample_rate = MegaNumber.from_int(44100)
+    num_bands = MegaNumber.from_int(8)
+    analyzer = FrequencyBandAnalyzer(bit_depth, sample_rate, num_bands)
+    bits = [1, 0, 1, 1, 0, 1, 0, 1]
+    band_waves = analyzer.analyze_pattern(bits)
+    print("Band waves:", band_waves)
+
 if __name__ == "__main__":
     # If run directly, just call fraction_stress_test.
     fraction_stress_test()
+    duty_cycle_wave_demo()
+    frequency_band_analyzer_demo()

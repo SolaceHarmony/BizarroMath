@@ -94,6 +94,8 @@ bizarromath/
 ├── meganumber/           # Chunk-based big-int code
 │   ├── __init__.py
 │   ├── mega_number.py    # MegaNumber class
+│   ├── mega_array.py     # MegaArray class
+│   ├── mega_binary.py    # MegaBinary class
 │   ├── memory_pool.py    # CPUMemoryPool & BlockMetrics
 │   └── optimized_toom3.py# HPC multiply: Karatsuba, Toom-3
 ├── megafraction/         # HPC fraction logic
@@ -226,6 +228,28 @@ analyzer = FrequencyBandAnalyzer(bit_depth, sample_rate, num_bands)
 bits = [1, 0, 1, 1, 0, 1, 0, 1]
 band_waves = analyzer.analyze_pattern(bits)
 print("Band waves:", band_waves)
+```
+
+### MegaInteger, MegaFloat, MegaArray, and MegaBinary
+
+```python
+from bizarromath.meganumber import MegaInteger, MegaFloat, MegaArray, MegaBinary
+
+# MegaInteger
+int_value = MegaInteger.from_decimal_string("1234567890")
+print("MegaInteger value:", int_value.to_decimal_string())
+
+# MegaFloat
+float_value = MegaFloat.from_decimal_string("12345.67890")
+print("MegaFloat value:", float_value.to_decimal_string())
+
+# MegaArray
+array_value = MegaArray.from_decimal_string("1,2,3,4,5")
+print("MegaArray value:", array_value.to_decimal_string())
+
+# MegaBinary
+binary_value = MegaBinary.from_decimal_string("1101")
+print("MegaBinary value:", binary_value.to_decimal_string())
 ```
 
 ---

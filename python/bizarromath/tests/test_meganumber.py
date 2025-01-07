@@ -3,6 +3,8 @@ import pytest
 import random
 
 from bizarromath.meganumber.mega_number import MegaNumber
+from bizarromath.meganumber.mega_array import MegaArray
+from bizarromath.meganumber.mega_binary import MegaBinary
 
 def test_meganumber_add():
     a = MegaNumber.from_decimal_string("123")
@@ -57,3 +59,27 @@ def test_random_add():
         m2 = MegaNumber.from_int(val2)
         sum_ = m1.add(m2)
         assert sum_.to_decimal_string() == str(val1 + val2)
+
+def test_megaarray_add():
+    a = MegaArray("1,2,3")
+    b = MegaArray("4,5,6")
+    c = a.add(b)
+    assert c.to_string() == "5,7,9"
+
+def test_megaarray_sub():
+    a = MegaArray("10,20,30")
+    b = MegaArray("1,2,3")
+    c = a.sub(b)
+    assert c.to_string() == "9,18,27"
+
+def test_megabinary_add():
+    a = MegaBinary("1010")
+    b = MegaBinary("1100")
+    c = a.add(b)
+    assert c.to_string() == "10110"
+
+def test_megabinary_sub():
+    a = MegaBinary("1100")
+    b = MegaBinary("1010")
+    c = a.sub(b)
+    assert c.to_string() == "10"

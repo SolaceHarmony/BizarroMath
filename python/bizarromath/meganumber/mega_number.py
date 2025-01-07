@@ -4,7 +4,7 @@ import random
 import math
 import os
 import pickle
-from typing import List, Tuple
+from typing import List, Tuple, Union
 
 class MegaNumber:
     """
@@ -816,3 +816,31 @@ class MegaNumber:
 
     def __repr__(self):
         return f"<MegaNumber {self.to_decimal_string(50)}>"
+
+    @classmethod
+    def create(cls, value: str, number_type: str) -> Union["MegaNumber", "MegaInteger", "MegaFloat", "MegaArray", "MegaBinary"]:
+        """
+        Create a MegaNumber of the specified type from a string value.
+        """
+        if number_type == "MegaInteger":
+            return MegaInteger.from_decimal_string(value)
+        elif number_type == "MegaFloat":
+            return MegaFloat.from_decimal_string(value)
+        elif number_type == "MegaArray":
+            return MegaArray.from_decimal_string(value)
+        elif number_type == "MegaBinary":
+            return MegaBinary.from_decimal_string(value)
+        else:
+            raise ValueError(f"Unknown number type: {number_type}")
+
+class MegaInteger(MegaNumber):
+    pass
+
+class MegaFloat(MegaNumber):
+    pass
+
+class MegaArray(MegaNumber):
+    pass
+
+class MegaBinary(MegaNumber):
+    pass

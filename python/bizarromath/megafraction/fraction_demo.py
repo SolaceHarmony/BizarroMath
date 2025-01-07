@@ -8,8 +8,8 @@ To run:
 """
 
 from .fraction_core import MegaFraction
-from ..bizzaroworld.bizarroworld_core import DutyCycleWave, FrequencyBandAnalyzer
-from ..meganumber.mega_number import MegaNumber
+from bizzaroworld.bizarroworld_core import DutyCycleWave, FrequencyBandAnalyzer
+from ..meganumber.mega_number import MegaNumber, MegaInteger, MegaFloat, MegaArray, MegaBinary
 
 def fraction_stress_test():
     """
@@ -91,8 +91,29 @@ def frequency_band_analyzer_demo():
     band_waves = analyzer.analyze_pattern(bits)
     print("Band waves:", band_waves)
 
+def mega_number_demo():
+    """
+    Demonstrate the usage of different MegaNumber types.
+    """
+    # MegaInteger
+    int_value = MegaInteger.from_decimal_string("1234567890")
+    print("MegaInteger value:", int_value.to_decimal_string())
+
+    # MegaFloat
+    float_value = MegaFloat.from_decimal_string("12345.67890")
+    print("MegaFloat value:", float_value.to_decimal_string())
+
+    # MegaArray
+    array_value = MegaArray.from_decimal_string("1,2,3,4,5")
+    print("MegaArray value:", array_value.to_decimal_string())
+
+    # MegaBinary
+    binary_value = MegaBinary.from_decimal_string("1101")
+    print("MegaBinary value:", binary_value.to_decimal_string())
+
 if __name__ == "__main__":
     # If run directly, just call fraction_stress_test.
     fraction_stress_test()
     duty_cycle_wave_demo()
     frequency_band_analyzer_demo()
+    mega_number_demo()

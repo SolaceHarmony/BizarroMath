@@ -2,7 +2,7 @@
 
 import math
 from typing import Tuple
-from ..meganumber.mega_number import MegaNumber
+from bizarromath.meganumber.mega_number import MegaNumber
 
 #
 #  1) HPC Wrappers for integer-only usage of MegaNumber

@@ -8,7 +8,7 @@ To run:
 """
 
 from .fraction_core import MegaFraction
-from bizzaroworld.bizarroworld_core import DutyCycleWave, FrequencyBandAnalyzer
+from bizarromath.bizarroworld.bizarroworld_core import DutyCycleWave, FrequencyBandAnalyzer
 from ..meganumber.mega_number import MegaNumber, MegaInteger, MegaFloat, MegaArray, MegaBinary
 
 def fraction_stress_test():

@@ -1,5 +1,5 @@
 from typing import Tuple
-from ..meganumber.mega_number import MegaNumber
+from bizarromath.meganumber.mega_number import MegaNumber
 
 def hpc_is_zero(x: MegaNumber) -> bool:
     return (len(x.mantissa) == 1 and x.mantissa[0] == 0)

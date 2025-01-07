@@ -1,5 +1,5 @@
 import pytest
-from bizarromath.bizzaroworld.bizarroworld_core import DutyCycleWave, BizarroWorld, FrequencyBandAnalyzer
+from bizarromath.bizarroworld.bizarroworld_core import DutyCycleWave, BizarroWorld, FrequencyBandAnalyzer
 from bizarromath.meganumber.mega_number import MegaNumber
 
 def test_duty_cycle_wave():

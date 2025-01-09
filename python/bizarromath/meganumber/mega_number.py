@@ -6,6 +6,18 @@ import os
 import pickle
 from typing import List, Tuple, Union
 
+class MegaInteger(MegaNumber):
+    pass
+
+class MegaFloat(MegaNumber):
+    pass
+
+class MegaArray(MegaNumber):
+    pass
+
+class MegaBinary(MegaNumber):
+    pass
+
 class MegaNumber:
     """
     Chunk-based big-int with decimal I/O (plus optional float exponent).
@@ -160,11 +172,13 @@ class MegaNumber:
             if not ('0' <= ch <= '9'):
                 raise ValueError(f"Invalid decimal digit {ch}")
 
-            digit_val = (ord(ch) - ord('0'))
+            # Convert digit string to integer
+            digit_val = int(ch)
+
             # multiply by 10
             mant_limb = cls._mul_chunklists(
                 mant_limb,
-                cls._int_to_chunklist(10, cls._global_chunk_size),
+                [10],
                 cls._global_chunk_size,
                 cls._base
             )
@@ -195,6 +209,64 @@ class MegaNumber:
             negative=negative,
             is_float=is_float,
             exponent_negative=exponent_negative
+        )
+        obj._normalize()
+        if cls == MegaNumber:
+            return obj._to_subclass()
+        return obj
+
+    def _to_subclass(self) -> "MegaNumber":
+        """
+        Convert MegaNumber to appropriate subclass based on is_float flag.
+        """
+        if self.is_float:
+            from .mega_float import MegaFloat
+            if isinstance(self, MegaFloat):
+                return self
+            return MegaFloat(
+                value=None,  # Avoid string parsing path
+                mantissa=self.mantissa[:],
+                exponent=self.exponent[:],
+                negative=self.negative,
+                is_float=True,
+                exponent_negative=self.exponent_negative
+            )
+        else:
+            from .mega_integer import MegaInteger
+            if isinstance(self, MegaInteger):
+                return self
+            return MegaInteger(
+                value=None,  # Avoid string parsing path
+                mantissa=self.mantissa[:],
+                exponent=self.exponent[:],
+                negative=self.negative,
+                is_float=False,
+                exponent_negative=self.exponent_negative
+            )
+
+    @classmethod
+    def from_binary_string(cls, bin_str: str) -> "MegaNumber":
+        """
+        Parse an unsigned binary string => MegaNumber.
+        """
+        if cls._global_chunk_size is None:
+            cls._auto_pick_chunk_size()
+            cls._auto_detect_done = True
+
+        s = bin_str.strip()
+        if not s:
+            return cls([0], [0], negative=False, is_float=False)
+
+        # Convert binary string to integer
+        int_val = int(s, 2)
+        mant_limb = cls._int_to_chunklist(int_val, cls._global_chunk_size)
+
+        obj = cls(
+            mantissa=mant_limb,
+            exponent=[0],
+            negative=False,
+            is_float=False,
+            exponent_negative=False
         )
         obj._normalize()
         return obj
@@ -806,13 +878,16 @@ class MegaNumber:
         return out
 
     def copy(self) -> "MegaNumber":
-        return MegaNumber(
-            self.mantissa[:],
-            self.exponent[:],
-            self.negative,
-            self.is_float,
-            self.exponent_negative
+        """Create a copy of this number with the correct type."""
+        obj = type(self)(
+            mantissa=self.mantissa[:],
+            exponent=self.exponent[:],
+            negative=self.negative,
+            is_float=self.is_float,
+            exponent_negative=self.exponent_negative
         )
+        obj._normalize()
+        return obj
 
     def __repr__(self):
         return f"<MegaNumber {self.to_decimal_string(50)}>"
@@ -832,15 +907,3 @@ class MegaNumber:
             return MegaBinary.from_decimal_string(value)
         else:
             raise ValueError(f"Unknown number type: {number_type}")
-
-class MegaInteger(MegaNumber):
-    pass
-
-class MegaFloat(MegaNumber):
-    pass
-
-class MegaArray(MegaNumber):
-    pass
-
-class MegaBinary(MegaNumber):
-    pass

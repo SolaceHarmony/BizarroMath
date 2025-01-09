@@ -5,6 +5,7 @@ from bizarromath.megafraction.fraction_core import MegaFraction
 from bizarromath.bizarroworld.bizarroworld_core import FrequencyBandAnalyzer, DutyCycleWave, BizarroWorld
 from bizarromath.meganumber.mega_array import MegaArray
 from bizarromath.meganumber.mega_binary import MegaBinary
+from .meganumber import MegaFloat, MegaInteger
 
 __all__ = [
     "MegaNumber",
@@ -16,4 +17,6 @@ __all__ = [
     "BizarroWorld",
     "MegaArray",
     "MegaBinary",
+    "MegaFloat",
+    "MegaInteger",
 ]

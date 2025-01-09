@@ -1,10 +1,34 @@
+from typing import List, Union, TYPE_CHECKING
 from .mega_number import MegaNumber
+
+if TYPE_CHECKING:
+    from .mega_float import MegaFloat
 
 class MegaInteger(MegaNumber):
     """
     MegaInteger class for integer-specific math operations.
     Inherits from MegaNumber.
     """
+    
+    def __init__(self, value=None, mantissa=None, exponent=None, negative=False, is_float=False, exponent_negative=False):
+        if isinstance(value, str):
+            # Create directly from from_decimal_string and return
+            result = MegaInteger.from_decimal_string(value)
+            self.mantissa = result.mantissa
+            self.exponent = result.exponent
+            self.negative = result.negative
+            self.is_float = False  # Always integer
+            self.exponent_negative = result.exponent_negative
+            return
+            
+        # Normal initialization for non-string inputs
+        super().__init__(
+            mantissa=mantissa,
+            exponent=exponent,
+            negative=negative,
+            is_float=False,  # Always integer
+            exponent_negative=exponent_negative
+        )
 
     def add(self, other: "MegaInteger") -> "MegaInteger":
         """
@@ -24,14 +48,19 @@ class MegaInteger(MegaNumber):
         result = self._sub_chunklists(self.mantissa, other.mantissa)
         return MegaInteger(mantissa=result, negative=self.negative)
 
-    def mul(self, other: "MegaInteger") -> "MegaInteger":
+    def mul(self, other: Union["MegaInteger", "MegaFloat"]) -> Union["MegaInteger", "MegaFloat"]:
         """
-        Integer multiplication.
+        Integer multiplication, returns MegaFloat if other is MegaFloat.
         """
-        if self.is_float or other.is_float:
-            raise NotImplementedError("mul is for integer mode only.")
+        from .mega_float import MegaFloat  # Import here to avoid circular dependency
+        
+        if isinstance(other, MegaFloat):
+            # Delegate to MegaFloat's multiplication
+            return other.mul(self)
+        
+        # Regular integer multiplication
         result = self._mul_chunklists(self.mantissa, other.mantissa, self._global_chunk_size, self._base)
-        return MegaInteger(mantissa=result, negative=self.negative)
+        return MegaInteger(mantissa=result, negative=(self.negative != other.negative))
 
     def div(self, other: "MegaInteger") -> "MegaInteger":
         """
@@ -68,6 +97,9 @@ class MegaInteger(MegaNumber):
         y = int(x ** 0.5)
         result = self._int_to_chunklist(y, self._global_chunk_size)
         return MegaInteger(mantissa=result, negative=self.negative)
+
+    def __repr__(self):
+        return f"<MegaInteger {self.to_decimal_string(50)}>"
 
     @classmethod
     def from_value(cls, value: Union[int, str, List[int]]) -> "MegaInteger":

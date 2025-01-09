@@ -7,7 +7,7 @@ class DutyCycleWave:
         self.sample_rate = sample_rate
         self.duty_cycle = duty_cycle
         self.period = period
-        self.num_samples = self.sample_rate.div(self.period)
+        self.num_samples = self.sample_rate.div(self.period).mantissa[0]
 
     def generate(self, num_steps: MegaNumber) -> List[int]:
         """Generate a duty cycle wave"""

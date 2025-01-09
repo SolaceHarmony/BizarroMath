@@ -658,6 +658,81 @@ class MegaNumber:
         result._normalize()
         return result
 
+    def exp2(self):
+        """Returns 2 raised to the power of this MegaNumber (2^self)"""
+        if self.negative:
+            raise ValueError("Cannot compute exp2 of a negative number.")
+        if len(self.mantissa) == 1 and self.mantissa[0] == 0:
+            return MegaNumber([1], [0], negative=False)
+
+        # For small integers, do direct computation
+        if not self.is_float and len(self.exponent) == 1 and self.exponent[0] == 0:
+            val = 0
+            shift = 0
+            for chunk in self.mantissa:
+                val += (chunk << shift)
+                shift += self._global_chunk_size
+            
+            # Compute 2^val
+            result = [1 << val]
+            return MegaNumber(result, [0], negative=False)
+
+        # For floating point numbers, split into integer and fractional parts
+        val = self._chunklist_to_small_int(self.mantissa, self._global_chunk_size)
+        if self.exponent_negative:
+            val = -val
+        if self.is_float:
+            # Use series expansion for fractional part
+            frac_val = val - int(val)
+            int_val = int(val)
+            
+            # 2^x = 2^int_val * 2^frac_val
+            int_part = [1 << int_val] if int_val >= 0 else [1 >> (-int_val)]
+            
+            # Approximate 2^frac_val using Taylor series
+            frac_part = self._exp2_frac(frac_val)
+            
+            result = self._mul_chunklists(int_part, frac_part, 
+                                        self._global_chunk_size,
+                                        self._base)
+            return MegaNumber(result, [0], negative=False)
+        
+        # For pure integers
+        result = [1 << val] if val >= 0 else [1 >> (-val)]
+        return MegaNumber(result, [0], negative=False)
+
+    def _exp2_frac(self, x):
+        """Helper to compute 2^x for 0 <= x < 1 using series expansion"""
+        # Use first few terms of Taylor series for 2^x
+        terms = 10
+        result = [1]  # First term
+        factorial = 1
+        power = 1
+        ln2 = 0.693147  # ln(2)
+        
+        for i in range(1, terms):
+            power *= x * ln2
+            factorial *= i
+            term = int(power / factorial * (1 << self._global_chunk_size))
+            result = self._add_chunklists(result, [term])
+            
+        return result
+
+    def exp(self) -> "MegaNumber":
+        """Get exponent value as MegaNumber, accounting for negatives"""
+        if len(self.exponent) == 1 and self.exponent[0] == 0:
+            return MegaNumber([0], [0])
+        
+        # Create new MegaNumber from exponent chunks
+        result = MegaNumber(
+            mantissa=self.exponent[:],
+            exponent=[0],
+            negative=self.exponent_negative,
+            is_float=False
+        )
+        result._normalize()
+        return result
+
     # -------------- chunk-based helpers --------------
     @classmethod
     def _int_to_chunklist(cls, val: int, csize: int) -> List[int]:
@@ -880,18 +955,4 @@ class MegaNumber:
     def __repr__(self):
         return f"<MegaNumber {self.to_decimal_string(50)}>"
 
-    @classmethod
-    def create(cls, value: str, number_type: str) -> Union["MegaNumber", "MegaInteger", "MegaFloat", "MegaArray", "MegaBinary"]:
-        """
-        Create a MegaNumber of the specified type from a string value.
-        """
-        if number_type == "MegaInteger":
-            return MegaInteger.from_decimal_string(value)
-        elif number_type == "MegaFloat":
-            return MegaFloat.from_decimal_string(value)
-        elif number_type == "MegaArray":
-            return MegaArray.from_decimal_string(value)
-        elif number_type == "MegaBinary":
-            return MegaBinary.from_decimal_string(value)
-        else:
-            raise ValueError(f"Unknown number type: {number_type}")
+

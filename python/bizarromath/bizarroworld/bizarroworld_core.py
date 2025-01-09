@@ -1,4 +1,5 @@
 from typing import List
+from bizarromath.meganumber.mega_binary import MegaBinary
 from bizarromath.meganumber.mega_number import MegaNumber
 
 class DutyCycleWave:
@@ -21,43 +22,23 @@ class DutyCycleWave:
                 wave[i] = 0
         return wave
 
-class BizarroWorld(MegaNumber):
-    def __init__(
-        self,
-        mantissa: List[int] = None,
-        exponent: List[int] = None,
-        negative: bool = False,
-        is_float: bool = False,
-        exponent_negative: bool = False
-    ):
-        super().__init__(
-            mantissa=mantissa,
-            exponent=exponent,
-            negative=negative,
-            is_float=is_float,
-            exponent_negative=exponent_negative
-        )
+class BizarroWorld(MegaBinary):
+    def __init__(self, value: str):
+        super().__init__(value)
 
     @classmethod
     def from_duty_cycle(cls, period: "BizarroWorld", duty: "BizarroWorld") -> "BizarroWorld":
         """Create a binary wave state from period and duty cycle"""
-        if not period.mantissa or not duty.mantissa:
-            return cls([0])
+        if not period.binary_string or not duty.binary_string:
+            return cls('0')
         wave_gen = DutyCycleWave(period, duty, period)
         wave = wave_gen.generate(period)
-        return cls(mantissa=wave, exponent=[0])
+        return cls(''.join(str(bit) for bit in wave))
 
     def xor_wave(self, other: "BizarroWorld") -> "BizarroWorld":
         """Binary wave interference through XOR"""
-        result_mantissa = self._xor_chunks(self.mantissa, other.mantissa)
-        return BizarroWorld(mantissa=result_mantissa, exponent=[0])
-
-    def _xor_chunks(self, a: List[int], b: List[int]) -> List[int]:
-        """XOR operation on chunk-limbs"""
-        result = []
-        for x, y in zip(a, b):
-            result.append(x ^ y)
-        return result
+        result = int(self.binary_string, 2) ^ int(other.binary_string, 2)
+        return BizarroWorld(bin(result)[2:])
 
 class FrequencyBandAnalyzer:
     def __init__(self, bit_depth: MegaNumber, sample_rate: MegaNumber, num_bands: MegaNumber):

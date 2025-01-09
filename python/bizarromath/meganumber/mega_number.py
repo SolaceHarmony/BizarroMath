@@ -6,18 +6,6 @@ import os
 import pickle
 from typing import List, Tuple, Union
 
-class MegaInteger(MegaNumber):
-    pass
-
-class MegaFloat(MegaNumber):
-    pass
-
-class MegaArray(MegaNumber):
-    pass
-
-class MegaBinary(MegaNumber):
-    pass
-
 class MegaNumber:
     """
     Chunk-based big-int with decimal I/O (plus optional float exponent).

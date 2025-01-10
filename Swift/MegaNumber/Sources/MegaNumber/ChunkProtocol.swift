@@ -1,3 +1,11 @@
+//
+//  ChunkProtocol.swift
+//  MegaNumber
+//
+//  Created by Sydney Bach on 1/9/25.
+//
+
+
 import Foundation
 
 /// Protocol defining the requirements for a chunk type

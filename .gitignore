@@ -102,3 +102,9 @@ thumbs.db
 ##################################################
 # End of .gitignore
 ##################################################
+/Swift/DerivedData
+*.xcuserstate
+/Swift/MegaNumber.xcworkspace/xcuserdata
+/Swift/MegaNumber/BizarroMath.xcodeproj/project.xcworkspace/xcuserdata
+/Swift/MegaNumber/BizarroMath.xcodeproj/xcuserdata
+/Swift/MegaNumber/DerivedData

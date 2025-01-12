@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		496C4D842D30BB5E00EBC68A /* MegaNumber.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 496C4D182D308F7700EBC68A /* MegaNumber.framework */; };
+		496C4D842D30BB5E00EBC68A /* BizarroMath.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 496C4D182D308F7700EBC68A /* BizarroMath.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -21,8 +21,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		496C4D182D308F7700EBC68A /* MegaNumber.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MegaNumber.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		496C4D802D30BB5E00EBC68A /* MegaNumberTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MegaNumberTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		496C4D182D308F7700EBC68A /* BizarroMath.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BizarroMath.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		496C4D802D30BB5E00EBC68A /* BizarroMathTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BizarroMathTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -50,7 +50,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				496C4D842D30BB5E00EBC68A /* MegaNumber.framework in Frameworks */,
+				496C4D842D30BB5E00EBC68A /* BizarroMath.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -69,8 +69,8 @@
 		496C4D192D308F7700EBC68A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				496C4D182D308F7700EBC68A /* MegaNumber.framework */,
-				496C4D802D30BB5E00EBC68A /* MegaNumberTest.xctest */,
+				496C4D182D308F7700EBC68A /* BizarroMath.framework */,
+				496C4D802D30BB5E00EBC68A /* BizarroMathTest.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -88,9 +88,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		496C4D172D308F7700EBC68A /* MegaNumber */ = {
+		496C4D172D308F7700EBC68A /* BizarroMath */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 496C4D2B2D308F7700EBC68A /* Build configuration list for PBXNativeTarget "MegaNumber" */;
+			buildConfigurationList = 496C4D2B2D308F7700EBC68A /* Build configuration list for PBXNativeTarget "BizarroMath" */;
 			buildPhases = (
 				496C4D132D308F7700EBC68A /* Headers */,
 				496C4D142D308F7700EBC68A /* Sources */,
@@ -104,16 +104,16 @@
 			fileSystemSynchronizedGroups = (
 				496C4D332D308FE800EBC68A /* Sources */,
 			);
-			name = MegaNumber;
+			name = BizarroMath;
 			packageProductDependencies = (
 			);
 			productName = MegaNumbers;
-			productReference = 496C4D182D308F7700EBC68A /* MegaNumber.framework */;
+			productReference = 496C4D182D308F7700EBC68A /* BizarroMath.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		496C4D7F2D30BB5E00EBC68A /* MegaNumberTest */ = {
+		496C4D7F2D30BB5E00EBC68A /* BizarroMathTest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 496C4D872D30BB5E00EBC68A /* Build configuration list for PBXNativeTarget "MegaNumberTest" */;
+			buildConfigurationList = 496C4D872D30BB5E00EBC68A /* Build configuration list for PBXNativeTarget "BizarroMathTest" */;
 			buildPhases = (
 				496C4D7C2D30BB5E00EBC68A /* Sources */,
 				496C4D7D2D30BB5E00EBC68A /* Frameworks */,
@@ -127,11 +127,11 @@
 			fileSystemSynchronizedGroups = (
 				496C4D812D30BB5E00EBC68A /* MegaNumberTest */,
 			);
-			name = MegaNumberTest;
+			name = BizarroMathTest;
 			packageProductDependencies = (
 			);
 			productName = MegaNumberTest;
-			productReference = 496C4D802D30BB5E00EBC68A /* MegaNumberTest.xctest */;
+			productReference = 496C4D802D30BB5E00EBC68A /* BizarroMathTest.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -153,7 +153,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 496C4D122D308F7700EBC68A /* Build configuration list for PBXProject "MegaNumber" */;
+			buildConfigurationList = 496C4D122D308F7700EBC68A /* Build configuration list for PBXProject "BizarroMath" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -167,8 +167,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				496C4D172D308F7700EBC68A /* MegaNumber */,
-				496C4D7F2D30BB5E00EBC68A /* MegaNumberTest */,
+				496C4D172D308F7700EBC68A /* BizarroMath */,
+				496C4D7F2D30BB5E00EBC68A /* BizarroMathTest */,
 			);
 		};
 /* End PBXProject section */
@@ -210,7 +210,7 @@
 /* Begin PBXTargetDependency section */
 		496C4D862D30BB5E00EBC68A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 496C4D172D308F7700EBC68A /* MegaNumber */;
+			target = 496C4D172D308F7700EBC68A /* BizarroMath */;
 			targetProxy = 496C4D852D30BB5E00EBC68A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -442,7 +442,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		496C4D122D308F7700EBC68A /* Build configuration list for PBXProject "MegaNumber" */ = {
+		496C4D122D308F7700EBC68A /* Build configuration list for PBXProject "BizarroMath" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				496C4D2E2D308F7700EBC68A /* Debug */,
@@ -451,7 +451,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		496C4D2B2D308F7700EBC68A /* Build configuration list for PBXNativeTarget "MegaNumber" */ = {
+		496C4D2B2D308F7700EBC68A /* Build configuration list for PBXNativeTarget "BizarroMath" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				496C4D2C2D308F7700EBC68A /* Debug */,
@@ -460,7 +460,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		496C4D872D30BB5E00EBC68A /* Build configuration list for PBXNativeTarget "MegaNumberTest" */ = {
+		496C4D872D30BB5E00EBC68A /* Build configuration list for PBXNativeTarget "BizarroMathTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				496C4D882D30BB5E00EBC68A /* Debug */,

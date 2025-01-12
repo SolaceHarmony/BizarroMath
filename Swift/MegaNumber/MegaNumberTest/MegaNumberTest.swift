@@ -6,7 +6,7 @@
 //
 
 import Testing
-@testable import MegaNumber
+@testable import BizarroMath
 
 @Suite
 
@@ -197,7 +197,7 @@ struct MegaNumberTests {
             let expectedRemainder: [UInt64] = [0]
             
             // HPC-based chunk-limb division
-            let (quotient, remainder) = try MegaNumberClass.divideChunkLists(
+            let (quotient, remainder) = try MegaNumber.divideChunkLists(
                 dividend.mantissa,
                 divisor.mantissa,
                 chunkSize: dividend.chunkSize,

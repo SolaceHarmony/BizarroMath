@@ -16,6 +16,10 @@ BizarroMath is a **high-performance**, chunk-based big-integer library (and frac
   - [Memory Pool and Optimized Multiplication](#memory-pool-and-optimized-multiplication)
   - [DutyCycleWave (Binary Wave Generator)](#dutycyclewave-binary-wave-generator)
   - [FrequencyBandAnalyzer (Frequency Analysis)](#frequencybandanalyzer-frequency-analysis)
+  - [MegaArray (Array of MegaNumbers)](#megaarray-array-of-meganumbers)
+  - [MegaBinary (Binary Data Class)](#megabinary-binary-data-class)
+  - [MegaFloat (Float-Specific Math Operations)](#megafloat-float-specific-math-operations)
+  - [BizarroWorld (Binary Wave State)](#bizarroworld-binary-wave-state)
 - [Contributing](#contributing)
 - [License](#license)
 - [References & Credits](#references--credits)
@@ -48,6 +52,18 @@ BizarroMath is a **high-performance**, chunk-based big-integer library (and frac
 
 7. **Frequency Analysis**
    - `FrequencyBandAnalyzer` class to analyze bit patterns across frequency bands using `MegaNumber`.
+
+8. **MegaArray**
+   - `MegaArray` class to handle arrays of `MegaNumber` instances with array-specific operations.
+
+9. **MegaBinary**
+   - `MegaBinary` class for HPC-based binary data, including wave generation, duty-cycle patterns, and interference.
+
+10. **MegaFloat**
+    - `MegaFloat` class for float-specific math operations, inheriting from `MegaNumber`.
+
+11. **BizarroWorld**
+    - `BizarroWorld` class for binary wave state and interference.
 
 ---
 
@@ -96,6 +112,7 @@ bizarromath/
 │   ├── mega_number.py    # MegaNumber class
 │   ├── mega_array.py     # MegaArray class
 │   ├── mega_binary.py    # MegaBinary class
+│   ├── mega_float.py     # MegaFloat class
 │   ├── memory_pool.py    # CPUMemoryPool & BlockMetrics
 │   └── optimized_toom3.py# HPC multiply: Karatsuba, Toom-3
 ├── megafraction/         # HPC fraction logic
@@ -230,26 +247,68 @@ band_waves = analyzer.analyze_pattern(bits)
 print("Band waves:", band_waves)
 ```
 
-### MegaInteger, MegaFloat, MegaArray, and MegaBinary
+### MegaArray (Array of MegaNumbers)
 
 ```python
-from bizarromath.meganumber import MegaInteger, MegaFloat, MegaArray, MegaBinary
+from bizarromath.meganumber import MegaArray
 
-# MegaInteger
-int_value = MegaInteger.from_decimal_string("1234567890")
-print("MegaInteger value:", int_value.to_decimal_string())
+# Create a MegaArray from a comma-delimited string
+array_value = MegaArray.from_decimal_string("1,2,3,4,5")
+print("MegaArray value:", array_value.to_string())
 
-# MegaFloat
+# Array-specific operations
+array1 = MegaArray.from_decimal_string("1,2,3")
+array2 = MegaArray.from_decimal_string("4,5,6")
+sum_array = array1.add(array2)
+print("Sum of arrays:", sum_array.to_string())
+```
+
+### MegaBinary (Binary Data Class)
+
+```python
+from bizarromath.meganumber import MegaBinary
+
+# Create a MegaBinary from a binary string
+binary_value = MegaBinary("1101")
+print("MegaBinary value:", binary_value.to_string())
+
+# Binary operations
+binary1 = MegaBinary("1010")
+binary2 = MegaBinary("1100")
+sum_binary = binary1.add(binary2)
+print("Sum of binaries:", sum_binary.to_string())
+```
+
+### MegaFloat (Float-Specific Math Operations)
+
+```python
+from bizarromath.meganumber import MegaFloat
+
+# Create a MegaFloat from a decimal string
 float_value = MegaFloat.from_decimal_string("12345.67890")
 print("MegaFloat value:", float_value.to_decimal_string())
 
-# MegaArray
-array_value = MegaArray.from_decimal_string("1,2,3,4,5")
-print("MegaArray value:", array_value.to_decimal_string())
+# Float operations
+float1 = MegaFloat.from_decimal_string("123.456")
+float2 = MegaFloat.from_decimal_string("0.0001")
+sum_float = float1.add(float2)
+print("Sum of floats:", sum_float.to_decimal_string())
+```
 
-# MegaBinary
-binary_value = MegaBinary.from_decimal_string("1101")
-print("MegaBinary value:", binary_value.to_decimal_string())
+### BizarroWorld (Binary Wave State)
+
+```python
+from bizarromath.bizzaroworld.bizarroworld_core import BizarroWorld
+
+# Create a BizarroWorld instance from a binary string
+bizarro_value = BizarroWorld("1101")
+print("BizarroWorld value:", bizarro_value.to_string())
+
+# Binary wave state operations
+wave1 = BizarroWorld("1010")
+wave2 = BizarroWorld("1100")
+xor_wave = wave1.xor_wave(wave2)
+print("XOR of waves:", xor_wave.to_string())
 ```
 
 ---
